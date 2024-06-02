@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fruity</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f8f8f8;
+      overflow: hidden;
+    }
+    header {
+      background-color: #4CAF50;
+      padding: 20px;
+      text-align: center;
+      color: white;
+    }
+    .logo {
+      margin: 0;
+      font-size: 2em;
+    }
+    main {
+      padding: 20px;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+    button.wave {
+      background-color: #4CAF50;
+      border: none;
+      color: white;
+      padding: 10px 20px;
+      margin: 10px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    button.wave:hover {
+      background-color: #45a049;
+    }
+    .text .h1 {
+      font-size: 2em;
+      margin: 20px 0;
+    }
+    .cane-image {
+      position: relative;
+      display: inline-block;
+    }
+    .cane-labels {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .section-container-main {
+      margin-top: 20px;
+    }
+    .section-container {
+      display: flex;
+      overflow: hidden;
+      width: 100%;
+      transition: transform 0.5s ease;
+    }
+    .section {
+      min-width: 100%;
+      box-sizing: border-box;
+    }
+    .fruit-images {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .fruit-image {
+      margin: 10px;
+    }
+    /* Falling fruits animation */
+    .falling-fruit {
+      position: absolute;
+      top: -50px;
+      width: 50px;
+      height: 50px;
+      animation: fall linear infinite;
+      z-index: 0;
+    }
+    @keyframes fall {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(100vh); }
+    }
+  </style>
+</head>
+<body>
+  <!-- header -->
+  <header>
+    <h2 class="logo">Fruity</h2>
+  </header>
+  <!-- main -->
+  <main>
+    <!-- Buttons -->
+    <div>
+      <button id="prevButton" class="wave"><i class="fa-solid fa-chevron-left"></i></button>
+      <button id="nextButton" class="wave"><i class="fa-solid fa-chevron-right"></i></button>
+    </div>
+    <!-- Fixed Sections -->
+    <div class="text">
+      <h1 class="h1">Pear</h1>
+      <div class="cane-image ">
+        <img src="https://www.yudiz.com/codepen/fruity/cane.svg" alt="">
+        <img src="https://www.yudiz.com/codepen/fruity/Labels.jpg" alt="" class="cane-labels">
+      </div>
+    </div>
+    <!-- Fixed Sections Ends-->
+    <!-- Fruits Images Section -->
+    <div class="section-container-main">
+      <div class="section-container">
+        <section class="section" id="section1">
+          <div class="fruit-images">
+            <div class="image-one fruit-image"><img src="https://www.yudiz.com/codepen/fruity/pear-one.png" alt="pear-image"></div>
+            <div class="image-two fruit-image"><img src="https://www.yudiz.com/codepen/fruity/pear-two.png" alt="pear-image"></div>
+            <div class="image-three fruit-image"><img src="https://www.yudiz.com/codepen/fruity/pear-three.png" alt="pear-image"></div>
+            <div class="image-four fruit-image"><img src="https://www.yudiz.com/codepen/fruity/pear-four.png" alt="pear-image"></div>
+          </div>
+        </section>
+        <section class="section" id="section2">
+          <div class="fruit-images">
+            <div class="image-one fruit-image"><img src="https://www.yudiz.com/codepen/fruity/apple-one.png" alt="apple-image"></div>
+            <div class="image-two fruit-image"><img src="https://www.yudiz.com/codepen/fruity/apple-two.png" alt="apple-image"></div>
+            <div class="image-three fruit-image"><img src="https://www.yudiz.com/codepen/fruity/apple-three.png" alt="apple-image"></div>
+            <div class="image-four fruit-image"><img src="https://www.yudiz.com/codepen/fruity/apple-four.png" alt="apple-image"></div>
+          </div>
+        </section>
+        <section class="section" id="section3">
+          <div class="fruit-images">
+            <div class="image-one fruit-image"><img src="https://www.yudiz.com/codepen/fruity/exotic-one.png" alt="exotic-image"></div>
+            <div class="image-two fruit-image"><img src="https://www.yudiz.com/codepen/fruity/exotic-two.png" alt="exotic-image"></div>
+            <div class="image-three fruit-image"><img src="https://www.yudiz.com/codepen/fruity/exotic-three.png" alt="exotic-image"></div>
+            <div class="image-four fruit-image"><img src="https://www.yudiz.com/codepen/fruity/exotic-four.png" alt="exotic-image"></div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+  <script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+      let currentSection = 0;
+      const sections = document.querySelectorAll('.section');
+      const totalSections = sections.length;
+
+      document.getElementById('nextButton').addEventListener('click', () => {
+        currentSection = (currentSection + 1) % totalSections;
+        updateSection();
+      });
+
+      document.getElementById('prevButton').addEventListener('click', () => {
+        currentSection = (currentSection - 1 + totalSections) % totalSections;
+        updateSection();
+      });
+
+      function updateSection() {
+        const offset = -currentSection * 100;
+        document.querySelector('.section-container').style.transform = `translateX(${offset}%)`;
+      }
+
+      // Function to create falling fruit
+      function createFallingFruit() {
+        const fruitImages = [
+          'https://www.yudiz.com/codepen/fruity/pear-one.png',
+          'https://www.yudiz.com/codepen/fruity/apple-one.png',
+          'https://www.yudiz.com/codepen/fruity/exotic-one.png'
+        ];
+        const fruit = document.createElement('img');
+        fruit.src = fruitImages[Math.floor(Math.random() * fruitImages.length)];
+        fruit.className = 'falling-fruit';
+        fruit.style.left = `${Math.random() * 100}vw`;
+        fruit.style.animationDuration = `${Math.random() * 5 + 5}s`;
+        document.body.appendChild(fruit);
+
+        fruit.addEventListener('animationend', () => {
+          fruit.remove();
+        });
+      }
+
+      // Create falling fruits at intervals
+      setInterval(createFallingFruit, 1000);
+    });
+  </script>
+</body>
+</html>
